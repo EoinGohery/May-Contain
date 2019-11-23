@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private void showChangeLanguageDialog() {
         final String[] listItems = {"French", "English"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-        mBuilder.setTitle("@/chooseLang");
+        mBuilder.setTitle("@string/chooseLang");
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
