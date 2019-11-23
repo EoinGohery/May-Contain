@@ -60,12 +60,45 @@
     <string name="generic_status_fmt">User: %s (%s)</string>
     <string name="generic_label_provider">Provider:</string>
 
-    <string name="id_fmt">User ID: %s</string>
-    <string name="email_fmt">Email: %s</string>
 
-    <string name="custom_auth_signin_status_user">User ID: %s</string>
-    <string name="custom_auth_signin_status_failed">Error: sign in failed</string>
+    <string name="nutAllergySelected">Nut Allergy Selected</string>
 
-    <string name="error_sign_in_failed">Sign in failed, see logs for details.</string>
+    <string name="nutAllergyDeselected">Nut Allergy Deselected</string>
+
+    <string name="SelectedAllergens">Selected Allergens</string>
+
+    <string name="nutAllergy">Nut Allergy</string>
+
+    <string name="dairyAllergy">Dairy Allergy</string>
+
+    <string name="shellfishAllergy">Shellfish Allergy</string>
+
+    <string name="dairySelect">Dairy Allergy Selected</string>
+
+    <string name="dairyDeselect">Dairy Allergy Deselected</string>
+
+    <string name="shellfishSel">Shellfish Allergy Selected</string>
+
+    <string name="shellfishDesel">Shellfish Allergy Deselected</string>
+
+    <string name="nut_allergy">Nut Allergy</string>
+
+    <string name="dairy_allergy">Dairy Allergy</string>
+
+    <string name="shellfish_allergy">Shellfish Allergy</string>
+
+    <string name="update">Update</string>
+
+    <string name="please_click_your_allergens">Please Click your allergens</string>
+
+    <string name="login">Login</string>
+
+    <string name="maycontain">MayContain</string>
+
+    <string name="this_product_is_safe_to_use">This product is safe to use</string>
+
+    <string name="return_to_search">Return to Search</string>
+
+    <string name="scan_products">Scan Products</string>
 
 </resources>

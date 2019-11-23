@@ -21,18 +21,18 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
-        mBtLaunchActivity = (Button) findViewById(R.id.bt_launch_activity);
+        mBtLaunchActivity = findViewById(R.id.LoginButton);
 
         mBtLaunchActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                launchActivity();
+                OnLoginClick();
             }
         });
     }
 
-    private void launchActivity() {
+    private void OnLoginClick() {
 
         Intent intent = new Intent(this, GoogleSignInActivity.class);
         startActivity(intent);
