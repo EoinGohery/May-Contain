@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        updateUI(0);
         logIn = findViewById(R.id.LoginButton);
 
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -31,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 OnLoginClick(view);
+                user = FirebaseAuth.getInstance().getCurrentUser();
             }
         });
-
+        updateUI(0);
         scanButton = findViewById(R.id.scanButton);
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +43,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void OnLoginClick(View v) {
-
-        Intent intent = new Intent(this, GoogleSignInActivity.class);
-        startActivity(intent);
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user!=null) {
             updateUI(1);
         }
+
+    }
+
+    private void OnLoginClick(View v) {
+
+            Intent intent = new Intent(this, GoogleSignInActivity.class);
+            startActivity(intent);
     }
 
     public void openScannerActivity(View v) {
