@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         TextView description = findViewById(R.id.description);
         ImageView image = findViewById(R.id.image);
         if (result == 0) { // login
-            description.setText("Log in to Continue");
+            description.setText(R.string.desc_google_sign_in);
 
             findViewById(R.id.LoginButton).setVisibility(View.VISIBLE);
             findViewById(R.id.scanButton).setVisibility(View.GONE);
