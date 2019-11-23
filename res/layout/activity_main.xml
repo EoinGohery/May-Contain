@@ -11,7 +11,7 @@
         android:id="@+id/LoginButton"
         android:layout_width="160dp"
         android:layout_height="99dp"
-        android:layout_marginBottom="204dp"
+        android:layout_marginBottom="200dp"
         android:onClick="OnLoginClick"
         android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,14 +34,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/changLang"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
+        android:layout_marginBottom="64dp"
+        android:text="@string/changeLang"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
