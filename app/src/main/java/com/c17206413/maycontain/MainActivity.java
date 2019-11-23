@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
     public void openScannerActivity(View v) {
         //Intent intent = new Intent(this, Scanner.class);
         //startActivity(intent);
+
+
+        //this is here just to test the update ui
         updateUI(4);
     }
 
