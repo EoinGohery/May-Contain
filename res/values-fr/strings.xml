@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AppShell</string>
+    <string name="SelectedAllergens">" Allergènes sélectionnés"</string>
+    <string name="dairyAllergy">Allergie aux produits laitiers</string>
+    <string name="dairySelect">" Allergie au lait sélectionné"</string>
+    <string name="dairyDeselect">Allergie aux produits laitiers désélectionnée</string>
+    <string name="dairy_allergy">Allergie aux produits laitiers</string>
+    <string name="login">s\'identifier</string>
+    <string name="maycontain">"Peut contenir "</string>
+    <string name="nutAllergy">"allergie aux noix "</string>
+    <string name="nutAllergySelected">allergie aux noix sélectionné</string>
+    <string name="nutAllergyDeselected">"allergie aux noix désélectionnée "</string>
+    <string name="nut_allergy">"allergie aux noix "</string>
+    <string name="please_click_your_allergens">" S'il vous plaît cliquez sur vos allergènes"</string>
+    <string name="return_to_search">"Retour à la recherche "</string>
+    <string name="scan_products">" Produits de numérisation"</string>
+    <string name="shellfishAllergy">" Allergie aux coquillages"</string>
+    <string name="shellfish_allergy">" Allergie aux coquillages"</string>
+    <string name="shellfishDesel">"Allergie aux crustacés désélectionnée "</string>
+    <string name="shellfishSel">"Allergie aux crustacés sélectionnée "</string>
+    <string name="this_product_is_safe_to_use">Ce produit est sûr à utiliser</string>
+    <string name="update">réactualiser</string>
+</resources>
