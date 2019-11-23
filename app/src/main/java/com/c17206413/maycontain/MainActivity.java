@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //this is here just to test the update ui
-        updateUI(4);
+        updateUI(3);
     }
 
     private void updateUI(int result) {
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.safe_tick);
         } else if (result == 3) { // unsafe
-            description.setText("This product can't be confirmed as safe to use");
+            description.setText("This product is not safe");
 
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
