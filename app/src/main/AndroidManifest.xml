@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name="BaseActivity"/>
+        <activity android:name="Scanner"/>
+
         <activity android:name=".GoogleSignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SIGNIN" />

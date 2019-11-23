@@ -13,7 +13,7 @@
     <string name="nutAllergyDeselected">"allergie aux noix désélectionnée "</string>
     <string name="nut_allergy">"allergie aux noix "</string>
     <string name="please_click_your_allergens">" S'il vous plaît cliquez sur vos allergènes"</string>
-    <string name="return_to_search">"Retour à la recherche "</string>
+    <string name="search">"Retour à la recherche "</string>
     <string name="scan_products">" Produits de numérisation"</string>
     <string name="shellfishAllergy">" Allergie aux coquillages"</string>
     <string name="shellfish_allergy">" Allergie aux coquillages"</string>
