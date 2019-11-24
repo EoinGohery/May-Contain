@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button logIn;
     private Button scanButton;
     private Button accountButton;
+    private Button addButton;
     private TextView description;
     private FirebaseUser user;
     private FirebaseFirestore db;
@@ -52,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addProduct();
+            }
+        });
+
         accountButton = findViewById(R.id.accountButton);
         accountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
         if (user!=null) {
             updateUI(1);
         }
+
+    }
+    private void addProduct() {
 
     }
 
@@ -133,30 +145,35 @@ public class MainActivity extends AppCompatActivity {
         if (result == 0) { // login
             description.setText(R.string.desc_google_sign_in);
 
+            findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.LoginButton).setVisibility(View.VISIBLE);
             findViewById(R.id.scanButton).setVisibility(View.GONE);
             image.setImageResource(R.drawable.common_google_signin_btn_icon_light_normal);
         } else if (result == 1) { // search
             description.setText(R.string.search);
 
+            findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.search_icon);
         } else if (result == 2) { // safe
             description.setText(R.string.this_product_is_safe_to_use);
 
+            findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.safe_tick);
         } else if (result == 3) { // unsafe
             description.setText("This product is not safe");
 
+            findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.x_mark);
         } else if (result == 4) { // unknown
             description.setText("Unknown Item");
 
+            findViewById(R.id.addButton).setVisibility(View.VISIBLE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.unknown_icon);

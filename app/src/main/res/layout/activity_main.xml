@@ -33,14 +33,26 @@
 
     <Button
         android:id="@+id/accountButton"
-        android:layout_width="104dp"
-        android:layout_height="48dp"
+        android:layout_width="107dp"
+        android:layout_height="51dp"
         android:layout_marginBottom="648dp"
         android:onClick="openScannerActivity"
         android:text="account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.905"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="109dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="648dp"
+        android:onClick="openScannerActivity"
+        android:text="Add Product"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
