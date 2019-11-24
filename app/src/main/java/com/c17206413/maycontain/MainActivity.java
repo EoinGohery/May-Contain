@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
     int barcode = 0;
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
-                String result=data.getStringExtra("result");
+                String result=data.getStringExtra(getString(R.string.result));
                 //barcode = Integer.parseInt(result);
-                DocumentReference docIdRef = db.collection("products").document(result);
+                DocumentReference docIdRef = db.collection(getString(R.string.products)).document(result);
                 docIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
