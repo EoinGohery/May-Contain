@@ -34,7 +34,7 @@ public class AccountSettings extends AppCompatActivity {
                     result += "@string/dairyAllergy";
                 }
                 if (check3.isChecked()) {
-                    result += "@string/shellfishAllergy";
+                    result += "@string/gluten_Allergy";
                 }
 
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
@@ -56,7 +56,7 @@ public class AccountSettings extends AppCompatActivity {
                 str = checked?"@string/dairySelect":"@string/dairyDeselect";
                 break;
             case R.id.glutenAllergyCheck:
-                str = checked?"@string/shellfishSel":"@string/shellfishDesel";
+                str = checked?"@string/glutenSel":"@string/glutenDesel";
                 break;
 
         }
