@@ -37,5 +37,6 @@
     <string name="unknown_item">"élément inconnu "</string>
     <string name="products">"Des produits "</string>
     <string name="result">résultat</string>
+    <string name="checked">vérifié</string>
 
 </resources>
