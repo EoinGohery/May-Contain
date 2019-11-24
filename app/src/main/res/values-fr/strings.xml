@@ -15,10 +15,10 @@
     <string name="please_click_your_allergens">" S'il vous plaît cliquez sur vos allergènes"</string>
     <string name="search">"Retour à la recherche "</string>
     <string name="scan_products">" Produits de numérisation"</string>
-    <string name="shellfishAllergy">" Allergie aux coquillages"</string>
-    <string name="shellfish_allergy">" Allergie aux coquillages"</string>
-    <string name="shellfishDesel">"Allergie aux crustacés désélectionnée "</string>
-    <string name="shellfishSel">"Allergie aux crustacés sélectionnée "</string>
+    <string name="glutenAllergy">" Allergie au gluten"</string>
+    <string name="gluten_allergy">" Allergie au gluten"</string>
+    <string name="glutenDesel">"Allergie au gluten désélectionné "</string>
+    <string name="glutenSel">"Allergie au gluten sélectionné "</string>
     <string name="this_product_is_safe_to_use">Ce produit est sûr à utiliser</string>
     <string name="update">réactualiser</string>
 
