@@ -56,5 +56,7 @@
     <string name="scan_products">Scan Products</string>
     <string name="this_product_is_not_safe">This product is not safe</string>
     <string name="unknown_item">Unknown Item</string>
+    <string name="products">products</string>
+    <string name="result">result</string>
 
 </resources>
