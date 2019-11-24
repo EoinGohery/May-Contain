@@ -1,27 +1,37 @@
 package com.c17206413.maycontain;
 
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button logIn;
     private Button scanButton;
-    private Button button;
+    private Button accountButton;
     private TextView description;
     private FirebaseUser user;
+    private FirebaseFirestore db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         logIn = findViewById(R.id.LoginButton);
 
@@ -39,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openScannerActivity(v);
+            }
+        });
+
+        accountButton = findViewById(R.id.accountButton);
+        accountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSettingsActivity(v);
             }
         });
     }
@@ -60,12 +78,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openScannerActivity(View v) {
-        //Intent intent = new Intent(this, Scanner.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, Scanner.class);
+        startActivityForResult(intent, 1);
+    }
+
+    public void openSettingsActivity(View v) {
+        Intent intent = new Intent(this, AccountSettings.class);
+        startActivity(intent);
+    }
 
 
-        //this is here just to test the update ui
-        updateUI(3);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    int barcode = 0;
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                String result=data.getStringExtra("result");
+                //barcode = Integer.parseInt(result);
+                DocumentReference docIdRef = db.collection("products").document(result);
+                docIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                if (isSafe(document)) {
+                                    updateUI(2);
+                                } else {
+                                    updateUI(3);
+                                }
+
+                            } else {
+                                updateUI(4);
+                            }
+                        }
+                    }
+                });
+
+            }
+            if (resultCode == RESULT_CANCELED) {
+                updateUI(1);
+            }
+        }
+    }
+
+    private boolean isSafe (DocumentSnapshot doc) {
+
+
+        return true;
     }
 
     private void updateUI(int result) {

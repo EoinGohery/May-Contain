@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.google.zxing.Result;
+import com.google.zxing.*;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -120,18 +119,24 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
     @Override
     public void handleResult(Result result) {
         final String scanResult = result.getText();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("@string/scanResult");
-        builder.setPositiveButton("@string/okCheck", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(scanResult));
-                startActivity(intent);
-            }
-        });
-        builder.setMessage(scanResult);
-        AlertDialog alert = builder.create();
-        alert.show();
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result",scanResult);
+        setResult(RESULT_OK,returnIntent);
+        finish();
+
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("@string/scanResult");
+//        builder.setPositiveButton("@string/okCheck", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(scanResult));
+//                startActivity(intent);
+//            }
+//        });
+//        builder.setMessage(scanResult);
+//        AlertDialog alert = builder.create();
+//        alert.show();
     }
 
 }

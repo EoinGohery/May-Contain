@@ -30,12 +30,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
-        android:id="@+id/shellfishAllergyCheck"
+        android:id="@+id/glutenAllergyCheck"
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="350dp"
-        android:text="@string/shellfish_allergy"
+        android:text="Gluten Allergy"
         android:onClick="onCheckboxClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

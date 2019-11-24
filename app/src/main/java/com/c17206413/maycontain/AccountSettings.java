@@ -20,7 +20,7 @@ public class AccountSettings extends AppCompatActivity {
 
         check1 = findViewById(R.id.nutAllergyCheck);
         check2 = findViewById(R.id.dairyAllergyCheck);
-        check3 = findViewById(R.id.shellfishAllergyCheck);
+        check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.acceptClickBox);
 
         button_sel.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ public class AccountSettings extends AppCompatActivity {
             case R.id.dairyAllergyCheck:
                 str = checked?"@string/dairySelect":"@string/dairyDeselect";
                 break;
-            case R.id.shellfishAllergyCheck:
+            case R.id.glutenAllergyCheck:
                 str = checked?"@string/shellfishSel":"@string/shellfishDesel";
                 break;
 
