@@ -58,5 +58,6 @@
     <string name="unknown_item">Unknown Item</string>
     <string name="products">products</string>
     <string name="result">result</string>
+    <string name="checked">checked</string>
 
 </resources>
