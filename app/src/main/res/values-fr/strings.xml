@@ -33,5 +33,7 @@
     <string name="firebase_status_fmt">Firebase UID: %s</string>
 
     <string name="google_status_fmt">Google Utilisateur/Utilisatrice: %s</string>
+    <string name="this_product_is_not_safe">Ce produit n\'est pas sûr à utiliser</string>
+    <string name="unknown_item">"élément inconnu "</string>
 
 </resources>
