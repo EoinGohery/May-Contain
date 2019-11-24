@@ -68,7 +68,6 @@ public class AccountSettings extends AppCompatActivity {
 
 }
 */
-
 package com.c17206413.maycontain;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -105,13 +104,13 @@ public class AccountSettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String result = "@string/SelectedAllergens";
-                if (check1.isChecked() && preferences.getBoolean("checked",false)== true) {
+                if (check1.isChecked() && preferences.getBoolean(getString(R.string.checked),false)== true) {
                     result += "@string/nutAllergy";
                 }
-                if (check2.isChecked() && preferences.getBoolean("checked",false)== true) {
+                if (check2.isChecked() && preferences.getBoolean(getString(R.string.checked), false)) {
                     result += "@string/dairyAllergy";
                 }
-                if (check3.isChecked()&& preferences.getBoolean("checked",false)== true) {
+                if (check3.isChecked()&& preferences.getBoolean(getString(R.string.checked),false)== true) {
                     result += "@string/gluten_Allergy";
                 }
 
@@ -130,17 +129,17 @@ public class AccountSettings extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.nutAllergyCheck:
                 str = checked?"@string/nutAllergySelected":"@string/nutAllergyDeselected";
-                editor.putBoolean("checked", true);
+                editor.putBoolean(getString(R.string.checked), true);
                 editor.apply();
                 break;
             case R.id.dairyAllergyCheck:
                 str = checked?"@string/dairySelect":"@string/dairyDeselect";
-                editor.putBoolean("checked", true);
+                editor.putBoolean(getString(R.string.checked), true);
                 editor.apply();
                 break;
             case R.id.glutenAllergyCheck:
                 str = checked?"@string/glutenSel":"@string/glutenDesel";
-                editor.putBoolean("checked", true);
+                editor.putBoolean(getString(R.string.checked), true);
                 editor.apply();
                 break;
 
