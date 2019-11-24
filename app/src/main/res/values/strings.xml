@@ -25,21 +25,21 @@
 
     <string name="dairyAllergy">Dairy Allergy</string>
 
-    <string name="shellfishAllergy">Shellfish Allergy</string>
+    <string name="glutenAllergy">Gluten Allergy</string>
 
     <string name="dairySelect">Dairy Allergy Selected</string>
 
     <string name="dairyDeselect">Dairy Allergy Deselected</string>
 
-    <string name="shellfishSel">Shellfish Allergy Selected</string>
+    <string name="glutenSel">Gluten Allergy Selected</string>
 
-    <string name="shellfishDesel">Shellfish Allergy Deselected</string>
+    <string name="glutenDesel">Gluten Allergy Deselected</string>
 
     <string name="nut_allergy">Nut Allergy</string>
 
     <string name="dairy_allergy">Dairy Allergy</string>
 
-    <string name="shellfish_allergy">Shellfish Allergy</string>
+    <string name="gluten_allergy">Gluten Allergy</string>
 
     <string name="update">Update</string>
 
