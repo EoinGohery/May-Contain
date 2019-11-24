@@ -164,14 +164,14 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.safe_tick);
         } else if (result == 3) { // unsafe
-            description.setText("This product is not safe");
+            description.setText(R.string.this_product_is_not_safe);
 
             findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.x_mark);
         } else if (result == 4) { // unknown
-            description.setText("Unknown Item");
+            description.setText(R.string.unknown_item);
 
             findViewById(R.id.addButton).setVisibility(View.VISIBLE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
