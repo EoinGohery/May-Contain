@@ -46,20 +46,32 @@
         android:layout_height="57dp"
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="220dp"
-        android:text="@string/update"
+        android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/clickTextBox"
+        android:id="@+id/nameTextBox"
         android:layout_width="255dp"
         android:layout_height="42dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/please_click_your_allergens"
+        android:text="Product Name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/AllergenTextBox"
+        android:layout_width="255dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="132dp"
+        android:ems="10"
+        android:text="Allergens Present"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

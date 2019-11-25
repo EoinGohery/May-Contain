@@ -28,10 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private Button scanButton;
     private Button accountButton;
     private Button addButton;
-    private boolean productGluten =true;
-    private boolean productLactose =true;
-    private boolean productNuts =true;
-    private String productName ="";
     private TextView description;
     private FirebaseUser user;
     private FirebaseFirestore db;
@@ -89,80 +85,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     private void addProduct() {
 
-        String name ="";
-        Map<String, Object> product = new HashMap<>();
-        getContentsDialog(0);
-        getContentsDialog(1);
-        getContentsDialog(2);
-        getNameDialog();
-        product.put("gluten", productGluten);
-        product.put("lactose", productLactose);
-        product.put("nuts", productNuts);
-        product.put("name", name);
-        db.collection("products").document(currentDocRef).set(product);
+        Intent intent = new Intent(this, AddProduct.class);
+        intent.putExtra("EXTRA_DOC_REF_ID", currentDocRef);
+        startActivity(intent);
         updateUI(1);
-    }
-    private void getNameDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Title");
-        final EditText input = new EditText(this);
-        builder.setView(input);
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                productName = input.getText().toString();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
-    }
-    private void getContentsDialog(final int allergen) {
-        String allergyString ="";
-        if (allergen == 0) {
-            allergyString = "gluten";
-        } else if (allergen == 1) {
-            allergyString = "lactose";
-        } else if (allergen == 2) {
-            allergyString = "nuts";
-        }
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        if (allergen == 0) {
-                            productGluten = true;
-                        } else if (allergen == 1) {
-                            productLactose = true;
-                        } else if (allergen == 2) {
-                            productNuts = true;
-                        }
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        if (allergen == 0) {
-                            productGluten = false;
-                        } else if (allergen == 1) {
-                            productLactose = false;
-                        } else if (allergen == 2) {
-                            productNuts = false;
-                        }
-                }
-            }
-        };
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Does this product contain " + allergyString)
-                .setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
-
-        builder.show();
     }
 
 

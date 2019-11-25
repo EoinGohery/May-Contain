@@ -10,6 +10,7 @@
     <string name="nutAllergyDeselected">Nut Allergy Deselected</string>
     <string name="SelectedAllergens">Selected Allergens</string>
     <string name="nutAllergy">Nut Allergy</string>
+    <string name="save">Save</string>
     <string name="dairyAllergy">Dairy Allergy</string>
     <string name="dairySelect">Dairy Allergy Selected</string>
     <string name="dairyDeselect">Dairy Allergy Deselected</string>
