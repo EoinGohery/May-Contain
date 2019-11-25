@@ -1,11 +1,16 @@
 package com.c17206413.maycontain;
 
 import android.content.Intent;
+import java.util.HashMap;
+import java.util.Map;
+
+import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.app.AlertDialog;
 import android.widget.*;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,9 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private Button scanButton;
     private Button accountButton;
     private Button addButton;
+    private boolean productGluten =true;
+    private boolean productLactose =true;
+    private boolean productNuts =true;
+    private String productName ="";
     private TextView description;
     private FirebaseUser user;
     private FirebaseFirestore db;
+    private String currentDocRef;
 
 
     @Override
@@ -81,7 +91,80 @@ public class MainActivity extends AppCompatActivity {
     }
     private void addProduct() {
 
+        String name ="";
+        Map<String, Object> product = new HashMap<>();
+        getContentsDialog(0);
+        getContentsDialog(1);
+        getContentsDialog(2);
+        getNameDialog();
+        product.put("gluten", productGluten);
+        product.put("lactose", productLactose);
+        product.put("nuts", productNuts);
+        product.put("name", name);
+        db.collection("products").document(currentDocRef).set(product);
+        updateUI(1);
     }
+    private void getNameDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Title");
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                productName = input.getText().toString();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+    private void getContentsDialog(final int allergen) {
+        String allergyString ="";
+        if (allergen == 0) {
+            allergyString = "gluten";
+        } else if (allergen == 1) {
+            allergyString = "lactose";
+        } else if (allergen == 2) {
+            allergyString = "nuts";
+        }
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        if (allergen == 0) {
+                            productGluten = true;
+                        } else if (allergen == 1) {
+                            productLactose = true;
+                        } else if (allergen == 2) {
+                            productNuts = true;
+                        }
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        if (allergen == 0) {
+                            productGluten = false;
+                        } else if (allergen == 1) {
+                            productLactose = false;
+                        } else if (allergen == 2) {
+                            productNuts = false;
+                        }
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Does this product contain " + allergyString)
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+
+        builder.show();
+    }
+
 
     private void OnLoginClick(View v) {
 
@@ -105,9 +188,9 @@ public class MainActivity extends AppCompatActivity {
     int barcode = 0;
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
-                String result=data.getStringExtra(getString(R.string.result));
-                //barcode = Integer.parseInt(result);
-                DocumentReference docIdRef = db.collection(getString(R.string.products)).document(result);
+                String result=data.getStringExtra("result");
+                currentDocRef =result;
+                DocumentReference docIdRef = db.collection("products").document(result);
                 docIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
@@ -118,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
                                 } else {
                                     updateUI(3);
                                 }
-
                             } else {
                                 updateUI(4);
                             }

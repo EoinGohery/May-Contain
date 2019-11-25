@@ -15,28 +15,20 @@
     <string name="please_click_your_allergens">" S'il vous plaît cliquez sur vos allergènes"</string>
     <string name="search">"Retour à la recherche "</string>
     <string name="scan_products">" Produits de numérisation"</string>
-    <string name="glutenAllergy">" Allergie au gluten"</string>
     <string name="gluten_allergy">" Allergie au gluten"</string>
     <string name="glutenDesel">"Allergie au gluten désélectionné "</string>
     <string name="glutenSel">"Allergie au gluten sélectionné "</string>
     <string name="this_product_is_safe_to_use">Ce produit est sûr à utiliser</string>
     <string name="update">réactualiser</string>
-
     <string name="desc_google_sign_in">Connexion Google</string>
-
     <string name="sign_in">Se Connecter</string>
-
     <string name="sign_out">Déconnexion</string>
-
     <string name="loading">Chargement…</string>
-
     <string name="firebase_status_fmt">Firebase UID: %s</string>
-
     <string name="google_status_fmt">Google Utilisateur/Utilisatrice: %s</string>
     <string name="this_product_is_not_safe">Ce produit n\'est pas sûr à utiliser</string>
     <string name="unknown_item">"élément inconnu "</string>
     <string name="products">"Des produits "</string>
     <string name="result">résultat</string>
     <string name="checked">vérifié</string>
-
 </resources>

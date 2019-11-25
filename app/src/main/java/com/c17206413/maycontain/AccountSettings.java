@@ -123,7 +123,7 @@ public class AccountSettings extends AppCompatActivity {
     public void onCheckboxClicked(View view) {
 
         boolean checked = ((CheckBox) view).isChecked();
-        String str="";
+        String str=" ";
 
         // Check which checkbox was clicked
         switch(view.getId()) {

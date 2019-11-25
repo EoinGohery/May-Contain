@@ -1,63 +1,33 @@
 <resources>
     <string name="app_name">May Contain</string>
-
     <string name="desc_google_sign_in">Google Sign In</string>
-
-
     <string name="sign_in">Sign In</string>
-
     <string name="sign_out">Sign Out</string>
-
     <string name="loading">Loading…</string>
-
-
     <string name="firebase_status_fmt">Firebase UID: %s</string>
-
     <string name="google_status_fmt">Google User: %s</string>
-
     <string name="nutAllergySelected">Nut Allergy Selected</string>
-
     <string name="nutAllergyDeselected">Nut Allergy Deselected</string>
-
     <string name="SelectedAllergens">Selected Allergens</string>
-
     <string name="nutAllergy">Nut Allergy</string>
-
     <string name="dairyAllergy">Dairy Allergy</string>
-
-    <string name="glutenAllergy">Gluten Allergy</string>
-
     <string name="dairySelect">Dairy Allergy Selected</string>
-
     <string name="dairyDeselect">Dairy Allergy Deselected</string>
-
     <string name="glutenSel">Gluten Allergy Selected</string>
-
     <string name="glutenDesel">Gluten Allergy Deselected</string>
-
     <string name="nut_allergy">Nut Allergy</string>
-
     <string name="dairy_allergy">Dairy Allergy</string>
-
     <string name="gluten_allergy">Gluten Allergy</string>
-
     <string name="update">Update</string>
-
     <string name="please_click_your_allergens">Please Click your allergens</string>
-
     <string name="login">Login</string>
-
     <string name="maycontain">MayContain</string>
-
     <string name="this_product_is_safe_to_use">This product is safe to use</string>
-
     <string name="search">Search</string>
-
     <string name="scan_products">Scan Products</string>
     <string name="this_product_is_not_safe">This product is not safe</string>
     <string name="unknown_item">Unknown Item</string>
     <string name="products">products</string>
     <string name="result">result</string>
     <string name="checked">checked</string>
-
 </resources>
