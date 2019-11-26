@@ -31,11 +31,9 @@
     <string name="products">"Des produits "</string>
     <string name="result">résultat</string>
     <string name="checked">vérifié</string>
-
-
-
-
-    not frenched
-
     <string name="save">Save</string>
+    <string name="changeLang">Changer de langue</string>
+    <string name="please_scan_your_product">veuillez scanner votre produit</string>
+    <string name="Settings">paramètres</string>
+    <string name="chooseLang">"Choisissez la langue "</string>
 </resources>
