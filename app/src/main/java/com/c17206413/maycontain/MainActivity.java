@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseFirestore db;
     private String currentDocRef;
+    private DocumentSnapshot userDoc;
 
 
     @Override
@@ -47,6 +48,18 @@ public class MainActivity extends AppCompatActivity {
         if (user==null) {
             updateUI(0);
         } else {
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            DocumentReference userIdRef = db.collection("users").document(user.getUid());
+            userIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            userDoc =document;
+                        }
+                    }
+                }
+            });
             updateUI(1);
         }
         scanButton = findViewById(R.id.scanButton);
@@ -75,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addProduct() {
-
         Intent intent = new Intent(this, AddProduct.class);
         intent.putExtra("EXTRA_DOC_REF_ID", currentDocRef);
         startActivity(intent);
@@ -130,9 +142,21 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
-                updateUI(1);
                 user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
+                if (user == null) {
+                    updateUI(1);
+                } else {
+                    DocumentReference userIdRef = db.collection("users").document(user.getUid());
+                    userIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    userDoc=document;
+                                }
+                            }
+                        }
+                    });
                     updateUI(1);
                 }
             }
@@ -144,9 +168,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isSafe (DocumentSnapshot doc) {
+        boolean safe =true;
+        if (doc.getBoolean("gluten") && userDoc.getBoolean("gluten")) {
+            safe =false;
+        }
+        if (doc.getBoolean("lactose") && userDoc.getBoolean("lactose")) {
+            safe =false;
+        }
+        if (doc.getBoolean("nuts") && userDoc.getBoolean("nuts")) {
+            safe =false;
+        }
 
-
-        return true;
+        return safe;
     }
 
     private void updateUI(int result) {
