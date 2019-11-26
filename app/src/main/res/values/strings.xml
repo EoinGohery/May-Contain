@@ -31,4 +31,8 @@
     <string name="products">products</string>
     <string name="result">result</string>
     <string name="checked">checked</string>
+    <string name="changeLang">Change Language</string>
+    <string name="please_scan_your_product">Please scan your product</string>
+    <string name="Settings">Settings</string>
+    <string name="chooseLang">Choose Language</string>
 </resources>
