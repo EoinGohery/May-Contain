@@ -76,7 +76,6 @@ public class GoogleSignInActivity extends BaseActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-
                 Intent returnIntent = new Intent();
                 setResult(RESULT_OK,returnIntent);
                 finish();
