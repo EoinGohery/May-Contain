@@ -1,18 +1,14 @@
 package com.c17206413.maycontain;
 
 import android.content.Intent;
-import java.util.HashMap;
-import java.util.Map;
-
-import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.app.AlertDialog;
 import android.widget.*;
-
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,7 +16,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,10 +42,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 OnLoginClick(view);
-                user = FirebaseAuth.getInstance().getCurrentUser();
             }
         });
-        updateUI(0);
+        if (user==null) {
+            updateUI(0);
+        } else {
+            updateUI(1);
+        }
         scanButton = findViewById(R.id.scanButton);
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,19 +69,9 @@ public class MainActivity extends AppCompatActivity {
         accountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSettingsActivity(v);
+                openSettingsActivity();
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user!=null) {
-            updateUI(1);
-        }
-
     }
 
     private void addProduct() {
@@ -98,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     private void OnLoginClick(View v) {
 
             Intent intent = new Intent(this, GoogleSignInActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 2);
     }
 
     public void openScannerActivity(View v) {
@@ -106,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
-    public void openSettingsActivity(View v) {
+    public void openSettingsActivity() {
         Intent intent = new Intent(this, AccountSettings.class);
         startActivity(intent);
     }
@@ -114,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    int barcode = 0;
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
                 String result=data.getStringExtra("result");
@@ -139,8 +126,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
             if (resultCode == RESULT_CANCELED) {
-                updateUI(1);
+               updateUI(1);
             }
+        } else if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                updateUI(1);
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    updateUI(1);
+                }
+            }
+            if (resultCode == RESULT_CANCELED) {
+                updateUI(0);
+            }
+
         }
     }
 

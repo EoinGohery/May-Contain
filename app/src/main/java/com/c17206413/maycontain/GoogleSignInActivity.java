@@ -3,7 +3,6 @@ package com.c17206413.maycontain;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -77,21 +76,22 @@ public class GoogleSignInActivity extends BaseActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
+
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK,returnIntent);
                 finish();
             } catch (ApiException e) {
                 // Google Sign In failed
                 Log.w(TAG, "Google sign in failed", e);
+                Intent returnIntent = new Intent();
+                setResult(RESULT_CANCELED,returnIntent);
+                finish();
             }
         }
     }
-    // [END onactivityresult]
-
-    // [START auth_with_google]
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-        // [START_EXCLUDE silent]
         showProgressDialog();
-        // [END_EXCLUDE]
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -105,12 +105,8 @@ public class GoogleSignInActivity extends BaseActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                        }
-
-                        // [START_EXCLUDE]
+                       }
                         hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
     }
