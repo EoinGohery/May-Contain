@@ -4,6 +4,8 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -17,16 +19,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button logIn;
     private Button scanButton;
     private Button accountButton;
     private Button addButton;
-    private TextView description;
     private FirebaseUser user;
     private FirebaseFirestore db;
     private String currentDocRef;
+    private DocumentSnapshot userDoc;
 
 
     @Override
@@ -44,11 +48,29 @@ public class MainActivity extends AppCompatActivity {
                 OnLoginClick(view);
             }
         });
-        if (user==null) {
-            updateUI(0);
-        } else {
+        if (user!=null) {
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            DocumentReference userIdRef = db.collection("users").document(user.getUid());
+            userIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            userDoc =document;
+                        }
+                    }
+                }
+            });
             updateUI(1);
+            Configuration config = new Configuration();
+            Locale locale = new Locale("fr");//userDoc.get("language").toString());
+            Locale.setDefault(locale);
+            config.setLocale(locale);
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        } else {
+            updateUI(0);
         }
+
         scanButton = findViewById(R.id.scanButton);
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addProduct() {
-
         Intent intent = new Intent(this, AddProduct.class);
         intent.putExtra("EXTRA_DOC_REF_ID", currentDocRef);
         startActivity(intent);
@@ -85,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void OnLoginClick(View v) {
 
-            Intent intent = new Intent(this, GoogleSignInActivity.class);
-            startActivityForResult(intent, 2);
+        Intent intent = new Intent(this, GoogleSignInActivity.class);
+        startActivityForResult(intent, 2);
     }
 
     public void openScannerActivity(View v) {
@@ -101,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
                 String result=data.getStringExtra("result");
@@ -126,13 +147,28 @@ public class MainActivity extends AppCompatActivity {
 
             }
             if (resultCode == RESULT_CANCELED) {
-               updateUI(1);
+                updateUI(1);
             }
         } else if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
-                updateUI(1);
                 user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
+                if (user == null) {
+                    updateUI(0);
+                } else {
+                    DocumentReference userIdRef = db.collection("users").document(user.getUid());
+                    userIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    userDoc=document;
+                                }
+                            }
+                            if (!task.isSuccessful()) {
+                                updateUI(3);
+                            }
+                        }
+                    });
                     updateUI(1);
                 }
             }
@@ -144,9 +180,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isSafe (DocumentSnapshot doc) {
+        boolean safe =true;
+        if (doc.getBoolean("gluten") && userDoc.getBoolean("gluten")) {
+            safe =false;
+        }
+        if (doc.getBoolean("lactose") && userDoc.getBoolean("lactose")) {
+            safe =false;
+        }
+        if (doc.getBoolean("nuts") && userDoc.getBoolean("nuts")) {
+            safe =false;
+        }
 
-
-        return true;
+        return safe;
     }
 
     private void updateUI(int result) {

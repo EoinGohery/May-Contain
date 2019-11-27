@@ -13,12 +13,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Demonstrate Firebase Authentication using a Google ID Token.
@@ -28,9 +36,13 @@ public class GoogleSignInActivity extends BaseActivity {
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 
+    private FirebaseFirestore db;
+    FirebaseUser currentUser;
+
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
+
 
     private GoogleSignInClient mGoogleSignInClient;
     private TextView mStatusTextView;
@@ -38,6 +50,8 @@ public class GoogleSignInActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         // [START config_signin]
         // Configure Google Sign In
@@ -48,11 +62,6 @@ public class GoogleSignInActivity extends BaseActivity {
         // [END config_signin]
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // [START initialize_auth]
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
     }
 
     // [START on_start_check_user]
@@ -60,7 +69,6 @@ public class GoogleSignInActivity extends BaseActivity {
     public void onStart() {
         super.onStart();
         signIn();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
     // [END on_start_check_user]
 
@@ -78,6 +86,43 @@ public class GoogleSignInActivity extends BaseActivity {
                 firebaseAuthWithGoogle(account);
 
                 Intent returnIntent = new Intent();
+                Log.d(TAG, "Current Uid "+ currentUser.getUid());
+                DocumentReference docIdRef = db.collection("users").document(currentUser.getUid());
+                docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (!document.exists()) {
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("Name", "Your Name");
+                                user.put("gluten", false);
+                                user.put("lactose", false);
+                                user.put("nuts", false);
+                                user.put("language", "en");
+
+
+                                db.collection("users").document(currentUser.getUid())
+                                        .set(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error writing document", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(TAG, "Failed with: ", task.getException());
+                        }
+                    }
+                });
+
                 setResult(RESULT_OK,returnIntent);
                 finish();
             } catch (ApiException e) {
@@ -101,7 +146,7 @@ public class GoogleSignInActivity extends BaseActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            currentUser = mAuth.getCurrentUser();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
