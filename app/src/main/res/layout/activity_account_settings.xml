@@ -35,10 +35,21 @@
         android:layout_height="30dp"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="250dp"
-        android:onClick="onCheckboxClicked"
         android:text="Gluten Allergy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/nameTextBox"
+        android:layout_width="255dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="116dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/changeLanguageButton"
@@ -71,7 +82,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/nutAllergyCheck"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeLanguageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/changeLanguageButton"
+        app:layout_constraintVertical_bias="0.781" />
 </androidx.constraintlayout.widget.ConstraintLayout>

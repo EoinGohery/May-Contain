@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.*;
 
@@ -27,9 +25,17 @@ public class AccountSettings extends AppCompatActivity {
 
     CheckBox check1, check2, check3;
     Button button_sel;
-    private DocumentSnapshot userDoc;
+    FirebaseUser user;
     private Button changeLanguageButton;
     DocumentReference userIdRef;
+    FirebaseFirestore db;
+    EditText mEdit;
+    public String language;
+    public String Uid;
+    public String name;
+    public boolean gluten;
+    public boolean lactose;
+    public boolean nuts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +45,12 @@ public class AccountSettings extends AppCompatActivity {
         check2 = findViewById(R.id.dairyAllergyCheck);
         check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.saveBox);
+        mEdit = findViewById(R.id.nameTextBox);
+        Uid = getIntent().getStringExtra("USER_REF_ID");
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userIdRef = db.collection("users").document(user.getUid());
-        userIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        userDoc =document;
-                    } else {
-                        recreate();
-                    }
-                }
-            }
-        });
-        loadLocale();
+        db = FirebaseFirestore.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        load();
         button_sel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +69,8 @@ public class AccountSettings extends AppCompatActivity {
                 } else {
                     userIdRef.update("gluten", false);
                 }
+                name = mEdit.getText().toString();
+                userIdRef.update("name", name);
                 finish();
             }
 
@@ -93,7 +90,7 @@ public class AccountSettings extends AppCompatActivity {
     private void showChangeLanguageDialog() {
         final String[] listItems = {"French", "English"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountSettings.this);
-        mBuilder.setTitle("@string/chooseLang");
+        mBuilder.setTitle(R.string.chooseLang);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
@@ -115,32 +112,63 @@ public class AccountSettings extends AppCompatActivity {
     private void setLocale(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
+        userIdRef.update("language", lang);
         Configuration config = new Configuration();
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        //userIdRef.update("language", lang);
     }
 
-    private void loadLocale() {
-        String language = "en";//userDoc.get("language").toString();
-        setLocale(language);
+    private void load() {
+        userIdRef = db.collection("users").document(Uid);
+        userIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        language = document.get("language").toString();
+                        name = document.get("name").toString();
+                        gluten = document.getBoolean("gluten");
+                        lactose = document.getBoolean("lactose");
+                        nuts = document.getBoolean("nuts");
+                        setLocale(language);
+                        if (nuts) {
+                            check1.setChecked(true);
+                        }
+                        if (lactose) {
+                            check2.setChecked(true);
+                        }
+                        if (gluten) {
+                            check3.setChecked(true);
+                        }
+                        mEdit.setText(name);
+                    } else {
+                        language = "en";
+                        setLocale(language);
+                    }
+                } else {
+                    finish();
+                }
+            }
+        });
 
     }
-//    public void onCheckboxClicked(View view) {
-//
+
+
+    public void onCheckboxClicked(View view) {
+
 //        boolean checked = ((CheckBox) view).isChecked();
 //
 //        // Check which checkbox was clicked
 //        switch(view.getId()) {
+//            case R.id.glutenAllergyCheck:
+//                userIdRef.update("gluten",checked);
+//                break;
 //            case R.id.nutAllergyCheck:
 //                userIdRef.update("nuts",checked);
 //                break;
 //            case R.id.dairyAllergyCheck:
 //                userIdRef.update("lactose",checked);
 //                break;
-//            case R.id.glutenAllergyCheck:
-//                userIdRef.update("gluten",checked);
-//                break;
 //        }
-//    }
+    }
 }
