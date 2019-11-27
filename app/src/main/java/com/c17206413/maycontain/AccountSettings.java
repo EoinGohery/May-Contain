@@ -34,12 +34,14 @@ public class AccountSettings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_account_settings);
+        //checkboxes and selection button.
         check1 = findViewById(R.id.nutAllergyCheck);
         check2 = findViewById(R.id.dairyAllergyCheck);
         check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.saveBox);
-
+        //firebase database used to store users info and allergies
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         userIdRef = db.collection("users").document(user.getUid());
@@ -55,7 +57,7 @@ public class AccountSettings extends AppCompatActivity {
                 }
             }
         });
-        loadLocale();
+       // checks id of user and their allegeries on selection click
         button_sel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +81,7 @@ public class AccountSettings extends AppCompatActivity {
 
         });
 
-
+        //language select button to change language on click
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
         changeLanguageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +91,7 @@ public class AccountSettings extends AppCompatActivity {
         });
     }
 
-
+    //alert dialog pops up on click to let user choose French or English
     private void showChangeLanguageDialog() {
         final String[] listItems = {"French", "English"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountSettings.this);
@@ -99,10 +101,12 @@ public class AccountSettings extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int i) {
                 if(i ==0) {
                     setLocale("fr");
+                    Toast.makeText(AccountSettings.this, R.string.fr_sel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 if(i ==1) {
                     setLocale("en");
+                    Toast.makeText(AccountSettings.this, R.string.eng_sel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 dialog.dismiss();
@@ -111,7 +115,7 @@ public class AccountSettings extends AppCompatActivity {
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();
     }
-
+    //sets the local to the language selected by the user
     private void setLocale(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
@@ -120,7 +124,7 @@ public class AccountSettings extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         //userIdRef.update("language", lang);
     }
-
+    //loads locale selected by user.
     private void loadLocale() {
         String language = "en";//userDoc.get("language").toString();
         setLocale(language);
