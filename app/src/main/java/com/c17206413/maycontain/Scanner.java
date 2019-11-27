@@ -29,7 +29,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
 
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
-
+        //checks to see if version is Marshmallow API 23 or higher
        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
        {
            if(checkPermission())
@@ -42,16 +42,16 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
 
        }
     }
-
+    //checks permission from user to use camera.
     private boolean checkPermission() {
         return (ContextCompat.checkSelfPermission(Scanner.this, CAMERA) == PackageManager.PERMISSION_GRANTED);
     }
-
+    //requests permission from user to access camera.
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this,new String[] {CAMERA},REQUEST_CAMERA);
     }
 
-
+    //passes requestcode and runs if permission is granted to use camera.
     public void onReqPermissionsResult(int requestCode, String [] permissions, int [] grantResults) {
         switch (requestCode)
         {
@@ -62,7 +62,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
                     if(cameraAccepted) {
                         Toast.makeText(Scanner.this, "@string/permsG", Toast.LENGTH_LONG).show();
 
-                    } else {
+                    } else { // if permission isnt granted, displays message to request permission
                         Toast.makeText(Scanner.this, "@string/permsDenied", Toast.LENGTH_LONG).show();
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if(shouldShowRequestPermissionRationale(CAMERA)) {
@@ -83,6 +83,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
                 break;
         }
     }
+    // checks version and permissions on resume to app, requests permision if not granted
     @Override
     public void onResume() {
         super.onResume();
@@ -100,19 +101,19 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
             }
         }
     }
-
+    // stops camera once scanner is used and app is closing
     @Override
     public void onDestroy() {
         super.onDestroy();
         scannerView.stopCamera();
     }
-
+    // displays alert message of the scanned item with ok/cancel buttons
     public void displayAlertMessage(String message, DialogInterface.OnClickListener listener){
             new AlertDialog.Builder(Scanner.this).setMessage(message).setPositiveButton("@string/okCheck", listener)
                     .setNegativeButton("@string/cancel", null).create().show();
     }
 
-
+    // handles the result of the scan and passes the result as an intent
     @Override
     public void handleResult(Result result) {
         final String scanResult = result.getText();
