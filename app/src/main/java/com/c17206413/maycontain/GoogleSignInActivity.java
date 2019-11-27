@@ -50,9 +50,8 @@ public class GoogleSignInActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
+        db = FirebaseFirestore.getInstance();
         // [START config_signin]
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -68,6 +67,7 @@ public class GoogleSignInActivity extends BaseActivity {
     @Override
     public void onStart() {
         super.onStart();
+        mAuth = mAuth = FirebaseAuth.getInstance();
         signIn();
     }
     // [END on_start_check_user]
@@ -85,43 +85,45 @@ public class GoogleSignInActivity extends BaseActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
 
+                currentUser = mAuth.getCurrentUser();
                 Intent returnIntent = new Intent();
-                Log.d(TAG, "Current Uid "+ currentUser.getUid());
-                DocumentReference docIdRef = db.collection("users").document(currentUser.getUid());
-                docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (!document.exists()) {
-                                Map<String, Object> user = new HashMap<>();
-                                user.put("Name", "Your Name");
-                                user.put("gluten", false);
-                                user.put("lactose", false);
-                                user.put("nuts", false);
-                                user.put("language", "en");
+                if (currentUser!=null) {
+                    DocumentReference docIdRef = db.collection("users").document(currentUser.getUid());
+                    docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (!document.exists()) {
+                                    Map<String, Object> user = new HashMap<>();
+                                    user.put("Name", "Your Name");
+                                    user.put("gluten", false);
+                                    user.put("lactose", false);
+                                    user.put("nuts", false);
+                                    user.put("language", "en");
 
 
-                                db.collection("users").document(currentUser.getUid())
-                                        .set(user)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "DocumentSnapshot successfully written!");
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG, "Error writing document", e);
-                                            }
-                                        });
+                                    db.collection("users").document(currentUser.getUid())
+                                            .set(user)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "Error writing document", e);
+                                                }
+                                            });
+                                }
+                            } else {
+                                Log.d(TAG, "Failed with: ", task.getException());
                             }
-                        } else {
-                            Log.d(TAG, "Failed with: ", task.getException());
                         }
-                    }
-                });
+                    });
+                }
 
                 setResult(RESULT_OK,returnIntent);
                 finish();

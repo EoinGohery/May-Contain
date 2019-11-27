@@ -122,7 +122,7 @@ public class AccountSettings extends AppCompatActivity {
     }
 
     private void loadLocale() {
-        String language = userDoc.get("language").toString();
+        String language = "en";//userDoc.get("language").toString();
         setLocale(language);
 
     }
