@@ -22,8 +22,8 @@
     <Button
         android:id="@+id/scanButton"
         android:layout_width="160dp"
-        android:layout_height="99dp"
-        android:layout_marginBottom="44dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="24dp"
         android:onClick="openScannerActivity"
         android:text="@string/search"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,8 +70,8 @@
     <TextView
         android:id="@+id/description"
         android:layout_width="365dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="160dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="200dp"
         android:ems="10"
         android:text="@string/this_product_is_safe_to_use"
         android:textAlignment="center"
@@ -93,6 +93,5 @@
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
