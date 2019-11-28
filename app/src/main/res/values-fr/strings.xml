@@ -35,6 +35,7 @@
     <string name="lactose_contains">Contient du laitier</string>
     <string name="nuts_contains">Contient des noix</string>
     <string name="product_name">Nom du produit</string>
+    <string name="permsG">permission accordée</string>
     <string name="englishBox">l'\Anglais</string>
     <string name="frenchBox">français</string>
     <string name="account">le compte</string>
