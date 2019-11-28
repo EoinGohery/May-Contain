@@ -7,7 +7,6 @@
     <string name="firebase_status_fmt">Firebase UID: %s</string>
     <string name="google_status_fmt">Google User: %s</string>
     <string name="SelectedAllergens">Selected Allergens</string>
-    <string name="nutAllergy">Nut Allergy</string>
     <string name="save">Save</string>
     <string name="frenchSel">French Selected</string>
     <string name="englishSel">English Selected</string>
@@ -40,4 +39,4 @@
     <string name="frenchBox">French</string>
     <string name="account">Account</string>
     <string name="addProduct">Add Product</string>
-    resources>
+    </resources>
