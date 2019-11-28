@@ -41,4 +41,6 @@
     <string name="nuts_contains">Contains Nuts</string>
     <string name="product_name">Product Name</string>
     <string name="permsG">Permission Granted</string>
+    <string name="englishBox">English</string>
+    <string name="frenchBox">French</string>
 </resources>
