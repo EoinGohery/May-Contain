@@ -2,22 +2,16 @@
 <resources>
     <string name="app_name">"May Contain"</string>
     <string name="SelectedAllergens">" Allergènes sélectionnés"</string>
-    <string name="dairyAllergy">Allergie aux produits laitiers</string>
-    <string name="dairySelect">" Allergie au lait sélectionné"</string>
-    <string name="dairyDeselect">Allergie aux produits laitiers désélectionnée</string>
     <string name="dairy_allergy">Allergie aux produits laitiers</string>
     <string name="login">s\'identifier</string>
     <string name="maycontain">"Peut contenir "</string>
-    <string name="nutAllergy">"allergie aux noix "</string>
-    <string name="nutAllergySelected">allergie aux noix sélectionné</string>
-    <string name="nutAllergyDeselected">"allergie aux noix désélectionnée "</string>
     <string name="nut_allergy">"allergie aux noix "</string>
     <string name="please_click_your_allergens">" S'il vous plaît cliquez sur vos allergènes"</string>
     <string name="search">"Retour à la recherche "</string>
     <string name="scan_products">" Produits de numérisation"</string>
     <string name="gluten_allergy">" Allergie au gluten"</string>
-    <string name="glutenDesel">"Allergie au gluten désélectionné "</string>
-    <string name="glutenSel">"Allergie au gluten sélectionné "</string>
+    <string name="frenchSel">"sélection française"</string>
+    <string name="englishSel">"anglais sélectionné"</string>
     <string name="this_product_is_safe_to_use">Ce produit est sûr à utiliser</string>
     <string name="update">réactualiser</string>
     <string name="desc_google_sign_in">Connexion Google</string>
