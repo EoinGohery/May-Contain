@@ -35,8 +35,13 @@
     <string name="nuts_contains">Contains Nuts</string>
     <string name="product_name">Product Name</string>
     <string name="permsG">Permission Granted</string>
+    <string name="permsDenied">Permission Denied</string>
     <string name="englishBox">English</string>
     <string name="frenchBox">French</string>
     <string name="account">Account</string>
     <string name="addProduct">Add Product</string>
-    </resources>
+    <string name="accessPerms">Access Permission</string>
+    <string name="okCheck">OK</string>
+    <string name="cancel">Cancel</string>
+
+</resources>
