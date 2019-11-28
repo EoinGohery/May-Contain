@@ -6,23 +6,17 @@
     <string name="loading">Loading…</string>
     <string name="firebase_status_fmt">Firebase UID: %s</string>
     <string name="google_status_fmt">Google User: %s</string>
-    <string name="nutAllergySelected">Nut Allergy Selected</string>
-    <string name="nutAllergyDeselected">Nut Allergy Deselected</string>
     <string name="SelectedAllergens">Selected Allergens</string>
-    <string name="nutAllergy">Nut Allergy</string>
     <string name="save">Save</string>
-    <string name="dairyAllergy">Dairy Allergy</string>
-    <string name="dairySelect">Dairy Allergy Selected</string>
-    <string name="dairyDeselect">Dairy Allergy Deselected</string>
-    <string name="glutenSel">Gluten Allergy Selected</string>
-    <string name="glutenDesel">Gluten Allergy Deselected</string>
+    <string name="frenchSel">French Selected</string>
+    <string name="englishSel">English Selected</string>
     <string name="nut_allergy">Nut Allergy</string>
     <string name="dairy_allergy">Dairy Allergy</string>
     <string name="gluten_allergy">Gluten Allergy</string>
     <string name="update">Update</string>
     <string name="please_click_your_allergens">Please Click your allergens</string>
     <string name="login">Login</string>
-    <string name="maycontain">MayContain</string>
+    <string name="maycontain">May Contain</string>
     <string name="this_product_is_safe_to_use">This product is safe to use</string>
     <string name="search">Search</string>
     <string name="scan_products">Scan Products</string>
@@ -31,4 +25,18 @@
     <string name="products">products</string>
     <string name="result">result</string>
     <string name="checked">checked</string>
-</resources>
+    <string name="changeLang">Change Language</string>
+    <string name="please_scan_your_product">Please scan your product</string>
+    <string name="Settings">Settings</string>
+    <string name="chooseLang">Choose Language</string>
+    <string name="gluten_contains">Contains Gluten</string>
+    <string name="allergens_present">Allergens Present</string>
+    <string name="lactose_contains">Contains Dairy</string>
+    <string name="nuts_contains">Contains Nuts</string>
+    <string name="product_name">Product Name</string>
+    <string name="permsG">Permission Granted</string>
+    <string name="englishBox">English</string>
+    <string name="frenchBox">French</string>
+    <string name="account">Account</string>
+    <string name="addProduct">Add Product</string>
+    </resources>

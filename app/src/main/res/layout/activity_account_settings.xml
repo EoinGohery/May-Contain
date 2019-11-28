@@ -6,26 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".AccountSettings">
 
+
     <CheckBox
         android:id="@+id/nutAllergyCheck"
         android:layout_width="300dp"
         android:layout_height="30dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="500dp"
-        android:text="@string/nut_allergy"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="400dp"
         android:onClick="onCheckboxClicked"
+        android:text="@string/nut_allergy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <CheckBox
         android:id="@+id/dairyAllergyCheck"
         android:layout_width="300dp"
         android:layout_height="30dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="425dp"
-        android:text="@string/dairy_allergy"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="325dp"
         android:onClick="onCheckboxClicked"
+        android:text="@string/dairy_allergy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -33,13 +33,24 @@
         android:id="@+id/glutenAllergyCheck"
         android:layout_width="300dp"
         android:layout_height="30dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="350dp"
-        android:text="Gluten Allergy"
-        android:onClick="onCheckboxClicked"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="250dp"
+        android:text="@string/gluten_allergy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    
+
+    <EditText
+        android:id="@+id/nameTextBox"
+        android:layout_width="255dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="116dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/changeLanguageButton"
         android:layout_width="135dp"
@@ -54,22 +65,24 @@
     <Button
         android:id="@+id/saveBox"
         android:layout_width="135dp"
-        android:layout_height="57dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="220dp"
+        android:layout_height="58dp"
+        android:layout_marginBottom="128dp"
         android:text="@string/update"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/clickTextBox"
         android:layout_width="255dp"
         android:layout_height="42dp"
-        android:layout_marginTop="48dp"
         android:ems="10"
         android:text="@string/please_click_your_allergens"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/nutAllergyCheck"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/changeLanguageButton"
+        app:layout_constraintVertical_bias="0.781" />
 </androidx.constraintlayout.widget.ConstraintLayout>

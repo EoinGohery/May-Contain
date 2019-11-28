@@ -1,68 +1,85 @@
 package com.c17206413.maycontain;
 
-import androidx.appcompat.app.ActionBar;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.*;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Locale;
 
 public class AccountSettings extends AppCompatActivity {
+    //Layout features
+    protected CheckBox check1, check2, check3;
+    protected Button button_sel, changeLanguageButton;
+    protected EditText mEdit;
 
-    CheckBox check1, check2, check3;
-    Button button_sel;
+    //FireStore
+    protected FirebaseUser user;
+    protected DocumentReference userIdRef;
+    protected FirebaseFirestore db;
 
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
-    Button changeLanguageButton;
+    //Strings
+    public String language, Uid, name;
 
-    @Override
+    //Booleans
+    public boolean gluten, lactose, nuts;
+
+    
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLocale();
         setContentView(R.layout.activity_account_settings);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = preferences.edit();
 
+        //checking id for the separate allergies
         check1 = findViewById(R.id.nutAllergyCheck);
         check2 = findViewById(R.id.dairyAllergyCheck);
         check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.saveBox);
+        mEdit = findViewById(R.id.nameTextBox);
+        Uid = getIntent().getStringExtra("USER_REF_ID");
 
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle(getResources().getString(R.string.app_name));
-
+        //using a database to store IDs
+        db = FirebaseFirestore.getInstance();   
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        load(); // load initial info such as language from database
 
         button_sel.setOnClickListener(new View.OnClickListener() {
             @Override
+            //on click of save, the checkboxes are checked if true and updates their account.
             public void onClick(View v) {
-                String result = "@string/SelectedAllergens";
-                if (check1.isChecked() && preferences.getBoolean(getString(R.string.checked), false)) {
-                    result += "@string/nutAllergy";
+                if (check1.isChecked()) {
+                    userIdRef.update("nuts", true);
+                } else {
+                    userIdRef.update("nuts", false);
                 }
-                if (check2.isChecked() && preferences.getBoolean(getString(R.string.checked), false)) {
-                    result += "@string/dairyAllergy";
+                if (check2.isChecked()) {
+                    userIdRef.update("lactose", true);
+                } else {
+                    userIdRef.update("lactose", false);
                 }
-                if (check3.isChecked() && preferences.getBoolean(getString(R.string.checked), false)) {
-                    result += "@string/gluten_Allergy";
+                if (check3.isChecked()) {
+                    userIdRef.update("gluten", true);
+                } else {
+                    userIdRef.update("gluten", false);
                 }
-
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                name = mEdit.getText().toString();
+                userIdRef.update("name", name);
                 finish();
             }
 
         });
 
-
+        //button to change language on click.
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
         changeLanguageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,21 +89,22 @@ public class AccountSettings extends AppCompatActivity {
         });
     }
 
-
+    //shows an alert box with choices between french and english, changes to chosen language.
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"@string/French_box", "@string/English_box"};
+        final String[] listItems = {R.string.frenchBox, R.string.englishBox};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountSettings.this);
-        mBuilder.setTitle(getString(R.string.chooseLang));
+        mBuilder.setTitle(R.string.chooseLang);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if(i ==0) {
                     setLocale("fr");
-                    Toast.makeText(AccountSettings.this, R.string.eng_sel, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AccountSettings.this, R.string.frenchSel, Toast.LENGTH_SHORT).show();
                     recreate();
-                }else if(i ==1) {
+                }
+                if(i ==1) {
                     setLocale("en");
-                    Toast.makeText(AccountSettings.this, R.string.fr_sel, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AccountSettings.this, R.string.englishSel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 dialog.dismiss();
@@ -95,49 +113,57 @@ public class AccountSettings extends AppCompatActivity {
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();
     }
-
+//sets the locale language to chosen language by user
     private void setLocale(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
+        userIdRef.update("language", lang);
         Configuration config = new Configuration();
-        config.locale = locale;
+        config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.Settings), MODE_PRIVATE).edit();
-        editor.putString("My_Lang", lang);
-        editor.apply();
-        // not sure if it connects properly to mainactivity
-        Intent refresh = new Intent(this,MainActivity.class);
-        startActivity(refresh);
-        finish();
     }
-    private void loadLocale() {
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.Settings), Activity.MODE_PRIVATE);
-        String language = prefs.getString("My_Lang", "");
-        setLocale(language);
+//loads in the user's id from database and their preferences for allergies and language.
+    private void load() {
+        userIdRef = db.collection("users").document(Uid);
+        userIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        try {
+                            language = document.get("language").toString();
+                            name = document.get("name").toString();
+                            gluten = document.getBoolean("gluten");
+                            lactose = document.getBoolean("lactose");
+                            nuts = document.getBoolean("nuts");
+                            setLocale(language);
+                            if (nuts) {
+                                check1.setChecked(true);
+                            }
+                            if (lactose) {
+                                check2.setChecked(true);
+                            }
+                            if (gluten) {
+                                check3.setChecked(true);
+                            }
+                            mEdit.setText(name);
+                        } catch (NullPointerException e) {
+                            finish();
+                        }
+                    } else {
+                        language = "en";
+                        setLocale(language);
+                    }
+                } else {
+                    finish();
+                }
+            }
+        });
+
     }
+
+
     public void onCheckboxClicked(View view) {
-
-        boolean checked = ((CheckBox) view).isChecked();
-        String str=" ";
-
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.nutAllergyCheck:
-                str = checked?"@string/nutAllergySelected":"@string/nutAllergyDeselected";
-                editor.putBoolean(getString(R.string.checked), true);
-                editor.apply();
-                break;
-            case R.id.dairyAllergyCheck:
-                str = checked?"@string/dairySelect":"@string/dairyDeselect";
-                editor.putBoolean(getString(R.string.checked), true);
-                editor.apply();
-                break;
-            case R.id.glutenAllergyCheck:
-                str = checked?"@string/glutenSel":"@string/glutenDesel";
-                editor.putBoolean(getString(R.string.checked), true);
-                editor.apply();
-                break;
-        }
-        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+    // unused but required header
     }
 }

@@ -2,22 +2,16 @@
 <resources>
     <string name="app_name">"May Contain"</string>
     <string name="SelectedAllergens">" Allergènes sélectionnés"</string>
-    <string name="dairyAllergy">Allergie aux produits laitiers</string>
-    <string name="dairySelect">" Allergie au lait sélectionné"</string>
-    <string name="dairyDeselect">Allergie aux produits laitiers désélectionnée</string>
     <string name="dairy_allergy">Allergie aux produits laitiers</string>
     <string name="login">s\'identifier</string>
     <string name="maycontain">"Peut contenir "</string>
-    <string name="nutAllergy">"allergie aux noix "</string>
-    <string name="nutAllergySelected">allergie aux noix sélectionné</string>
-    <string name="nutAllergyDeselected">"allergie aux noix désélectionnée "</string>
     <string name="nut_allergy">"allergie aux noix "</string>
     <string name="please_click_your_allergens">" S'il vous plaît cliquez sur vos allergènes"</string>
     <string name="search">"Retour à la recherche "</string>
     <string name="scan_products">" Produits de numérisation"</string>
     <string name="gluten_allergy">" Allergie au gluten"</string>
-    <string name="glutenDesel">"Allergie au gluten désélectionné "</string>
-    <string name="glutenSel">"Allergie au gluten sélectionné "</string>
+    <string name="frenchSel">"sélection française"</string>
+    <string name="englishSel">"anglais sélectionné"</string>
     <string name="this_product_is_safe_to_use">Ce produit est sûr à utiliser</string>
     <string name="update">réactualiser</string>
     <string name="desc_google_sign_in">Connexion Google</string>
@@ -31,11 +25,20 @@
     <string name="products">"Des produits "</string>
     <string name="result">résultat</string>
     <string name="checked">vérifié</string>
+    <string name="save">sauver</string>
+    <string name="changeLang">Changer de langue</string>
+    <string name="please_scan_your_product">veuillez scanner votre produit</string>
+    <string name="Settings">paramètres</string>
+    <string name="chooseLang">"Choisissez la langue "</string>
+    <string name="gluten_contains">Contient du gluten</string>
+    <string name="allergens_present">allergènes présents</string>
+    <string name="lactose_contains">Contient du laitier</string>
+    <string name="nuts_contains">Contient des noix</string>
+    <string name="product_name">Nom du produit</string>
+    <string name="permsG">permission accordée</string>
+    <string name="englishBox">l\'Anglais</string>
+    <string name="frenchBox">français</string>
+    <string name="account">le compte</string>
+    <string name="addProduct">ajouter un produit</string>
 
-
-
-
-    not frenched
-
-    <string name="save">Save</string>
 </resources>
