@@ -3,14 +3,11 @@ package com.c17206413.maycontain;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,38 +19,44 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Locale;
 
 public class AccountSettings extends AppCompatActivity {
-    CheckBox check1, check2, check3;
-    Button button_sel;
-    FirebaseUser user;
-    private Button changeLanguageButton;
-    DocumentReference userIdRef;
-    FirebaseFirestore db;
-    EditText mEdit;
-    public String language;
-    public String Uid;
-    public String name;
-    public boolean gluten;
-    public boolean lactose;
-    public boolean nuts;
+    //Layout features
+    protected CheckBox check1, check2, check3;
+    protected Button button_sel, changeLanguageButton;
+    protected EditText mEdit;
+
+    //FireStore
+    protected FirebaseUser user;
+    protected DocumentReference userIdRef;
+    protected FirebaseFirestore db;
+
+    //Strings
+    public String language, Uid, name;
+
+    //Booleans
+    public boolean gluten, lactose, nuts;
+
     
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
-        //checking id for the seperate allergies
+
+        //checking id for the separate allergies
         check1 = findViewById(R.id.nutAllergyCheck);
         check2 = findViewById(R.id.dairyAllergyCheck);
         check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.saveBox);
         mEdit = findViewById(R.id.nameTextBox);
         Uid = getIntent().getStringExtra("USER_REF_ID");
+
         //using a database to store IDs
         db = FirebaseFirestore.getInstance();   
         user = FirebaseAuth.getInstance().getCurrentUser();
-        load();
+        load(); // load initial info such as language from database
+
         button_sel.setOnClickListener(new View.OnClickListener() {
             @Override
-            //on click of the checbox it stores the allergy for each user and updates their account.
+            //on click of save, the checkboxes are checked if true and updates their account.
             public void onClick(View v) {
                 if (check1.isChecked()) {
                     userIdRef.update("nuts", true);
@@ -126,22 +129,26 @@ public class AccountSettings extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        language = document.get("language").toString();
-                        name = document.get("name").toString();
-                        gluten = document.getBoolean("gluten");
-                        lactose = document.getBoolean("lactose");
-                        nuts = document.getBoolean("nuts");
-                        setLocale(language);
-                        if (nuts) {
-                            check1.setChecked(true);
+                        try {
+                            language = document.get("language").toString();
+                            name = document.get("name").toString();
+                            gluten = document.getBoolean("gluten");
+                            lactose = document.getBoolean("lactose");
+                            nuts = document.getBoolean("nuts");
+                            setLocale(language);
+                            if (nuts) {
+                                check1.setChecked(true);
+                            }
+                            if (lactose) {
+                                check2.setChecked(true);
+                            }
+                            if (gluten) {
+                                check3.setChecked(true);
+                            }
+                            mEdit.setText(name);
+                        } catch (NullPointerException e) {
+                            finish();
                         }
-                        if (lactose) {
-                            check2.setChecked(true);
-                        }
-                        if (gluten) {
-                            check3.setChecked(true);
-                        }
-                        mEdit.setText(name);
                     } else {
                         language = "en";
                         setLocale(language);

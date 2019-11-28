@@ -12,7 +12,7 @@
         android:layout_width="160dp"
         android:layout_height="99dp"
         android:layout_marginBottom="44dp"
-        android:onClick="OnLoginClick"
+        android:onClick="signIn"
         android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

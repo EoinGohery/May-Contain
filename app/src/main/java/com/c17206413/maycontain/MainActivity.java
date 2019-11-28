@@ -31,10 +31,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button logIn;
-    private Button scanButton;
-    private Button accountButton;
-    private Button addButton;
+    protected Button logIn;
+    protected Button scanButton;
+    protected Button accountButton;
+    protected Button addButton;
     private FirebaseUser user;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean gluten;
     private boolean lactose;
     private boolean nuts;
-    // [END declare_auth]
 
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signIn();
+                signIn(view);
             }
         });
         updateUI(1);
@@ -146,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         updateUI(1);
     }
 
-    private void signIn() {
+    private void signIn(View v) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
