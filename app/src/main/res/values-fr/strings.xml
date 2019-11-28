@@ -36,10 +36,11 @@
     <string name="please_scan_your_product">veuillez scanner votre produit</string>
     <string name="Settings">paramètres</string>
     <string name="chooseLang">"Choisissez la langue "</string>
-
     <string name="gluten_contains">Contains Gluten</string>
     <string name="allergens_present">bollocka</string>
     <string name="lactose_contains">Contains Dairy</string>
     <string name="nuts_contains">Contains Nuts</string>
     <string name="product_name">Product Name</string>
+    <string name="englishBox">l'\Anglais</string>
+    <string name="frenchBox">français</string>
 </resources>
