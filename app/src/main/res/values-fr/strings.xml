@@ -40,5 +40,10 @@
     <string name="frenchBox">français</string>
     <string name="account">le compte</string>
     <string name="addProduct">ajouter un produit</string>
+    <string name="permsDenied">"permission refusée "</string>
+    <string name="accessPerms">"droit d'accès "</string>
+    <string name="okCheck">D\'accord</string>
+    <string name="cancel">Annuler</string>
+    <string name="productContains">produit contient:</string>
 
 </resources>

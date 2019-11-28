@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected Button logIn, scanButton, accountButton, addButton;
 
     private String Uid, language,  currentDocRef;
+    private String contains = "";
     private boolean gluten, lactose, nuts;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
         updateUI(1);
 
-        //if user hase logged in before it will be auto recognised and  localinfo set
+        //if user has logged in before it will be auto recognised and  local info set
         if (user!=null) {
             Uid =user.getUid();
             DocumentReference userIdRef = db.collection("users").document(Uid);
@@ -301,17 +302,24 @@ public class MainActivity extends AppCompatActivity {
     private boolean isSafe (DocumentSnapshot doc) {
         boolean safe =true;
         if (doc.getBoolean("gluten") && gluten) {
+            contains += R.string.gluten_contains;
+            contains += "\n";
             safe =false;
         }
         if (doc.getBoolean("lactose") && lactose) {
+            contains += R.string.lactose_contains;
+            contains += "\n";
             safe =false;
         }
         if (doc.getBoolean("nuts") && nuts) {
+            contains += R.string.nuts_contains;
+            contains += "\n";
             safe =false;
         }
 
         return safe;
     }
+
 
     private void updateUI(int result) {
         TextView description = findViewById(R.id.description);
@@ -341,7 +349,9 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.safe_tick);
         } else if (result == 3) { // unsafe
-            description.setText(R.string.this_product_is_not_safe);
+            String unsafeProduct = getString(R.string.this_product_is_not_safe);
+            String productContains = getString(R.string.productContains);
+            description.setText(String.format("%s\n%s%s", unsafeProduct, productContains, contains));
 
             findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.accountButton).setVisibility(View.VISIBLE);
