@@ -31,16 +31,19 @@
     <string name="products">"Des produits "</string>
     <string name="result">résultat</string>
     <string name="checked">vérifié</string>
-    <string name="save">Save</string>
+    <string name="save">sauver</string>
     <string name="changeLang">Changer de langue</string>
     <string name="please_scan_your_product">veuillez scanner votre produit</string>
     <string name="Settings">paramètres</string>
     <string name="chooseLang">"Choisissez la langue "</string>
-    <string name="gluten_contains">Contains Gluten</string>
-    <string name="allergens_present">bollocka</string>
-    <string name="lactose_contains">Contains Dairy</string>
-    <string name="nuts_contains">Contains Nuts</string>
-    <string name="product_name">Product Name</string>
+    <string name="gluten_contains">Contient du gluten</string>
+    <string name="allergens_present">allergènes présents</string>
+    <string name="lactose_contains">Contient du laitier</string>
+    <string name="nuts_contains">Contient des noix</string>
+    <string name="product_name">Nom du produit</string>
     <string name="englishBox">l'\Anglais</string>
     <string name="frenchBox">français</string>
+    <string name="account">le compte</string>
+    <string name="addProduct">ajouter un produit</string>
+
 </resources>
