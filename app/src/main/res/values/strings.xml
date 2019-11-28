@@ -6,16 +6,11 @@
     <string name="loading">Loading…</string>
     <string name="firebase_status_fmt">Firebase UID: %s</string>
     <string name="google_status_fmt">Google User: %s</string>
-    <string name="nutAllergySelected">Nut Allergy Selected</string>
-    <string name="nutAllergyDeselected">Nut Allergy Deselected</string>
     <string name="SelectedAllergens">Selected Allergens</string>
     <string name="nutAllergy">Nut Allergy</string>
     <string name="save">Save</string>
-    <string name="dairyAllergy">Dairy Allergy</string>
-    <string name="dairySelect">Dairy Allergy Selected</string>
-    <string name="dairyDeselect">Dairy Allergy Deselected</string>
-    <string name="glutenSel">Gluten Allergy Selected</string>
-    <string name="glutenDesel">Gluten Allergy Deselected</string>
+    <string name="frenchSel">French Selected</string>
+    <string name="englishSel">English Selected</string>
     <string name="nut_allergy">Nut Allergy</string>
     <string name="dairy_allergy">Dairy Allergy</string>
     <string name="gluten_allergy">Gluten Allergy</string>
@@ -43,4 +38,6 @@
     <string name="permsG">Permission Granted</string>
     <string name="englishBox">English</string>
     <string name="frenchBox">French</string>
-</resources>
+    <string name="account">Account</string>
+    <string name="addProduct">Add Product</string>
+    resources>
