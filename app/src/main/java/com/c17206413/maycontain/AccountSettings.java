@@ -1,10 +1,12 @@
 package com.c17206413.maycontain;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,21 +21,25 @@ public class AccountSettings extends AppCompatActivity {
     CheckBox check1, check2, check3;
     Button button_sel;
 
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
-    private Button changeLanguageButton;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+    Button changeLanguageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_account_settings);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
-        loadLocale();
+
         check1 = findViewById(R.id.nutAllergyCheck);
         check2 = findViewById(R.id.dairyAllergyCheck);
         check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.saveBox);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle(getResources().getString(R.string.app_name));
 
 
         button_sel.setOnClickListener(new View.OnClickListener() {
@@ -68,18 +74,19 @@ public class AccountSettings extends AppCompatActivity {
 
 
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"French", "English"};
+        final String[] listItems = {"@string/French_box", "@string/English_box"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountSettings.this);
-        mBuilder.setTitle("@string/chooseLang");
+        mBuilder.setTitle(getString(R.string.chooseLang));
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if(i ==0) {
                     setLocale("fr");
+                    Toast.makeText(AccountSettings.this, R.string.eng_sel, Toast.LENGTH_SHORT).show();
                     recreate();
-                }
-                if(i ==0) {
+                }else if(i ==1) {
                     setLocale("en");
+                    Toast.makeText(AccountSettings.this, R.string.fr_sel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 dialog.dismiss();
@@ -95,16 +102,18 @@ public class AccountSettings extends AppCompatActivity {
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.Settings), MODE_PRIVATE).edit();
         editor.putString("My_Lang", lang);
         editor.apply();
+        // not sure if it connects properly to mainactivity
+        Intent refresh = new Intent(this,MainActivity.class);
+        startActivity(refresh);
+        finish();
     }
-
     private void loadLocale() {
-        SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.Settings), Activity.MODE_PRIVATE);
         String language = prefs.getString("My_Lang", "");
         setLocale(language);
-
     }
     public void onCheckboxClicked(View view) {
 
