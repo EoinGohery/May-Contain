@@ -92,7 +92,7 @@ public class AccountSettings extends AppCompatActivity {
 
     //shows an alert box with choices between french and english, changes to chosen language.
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"French", "English"};
+        final String[] listItems = {"@string/frenchBox", "@string/englishBox"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountSettings.this);
         mBuilder.setTitle(R.string.chooseLang);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
@@ -100,10 +100,12 @@ public class AccountSettings extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int i) {
                 if(i ==0) {
                     setLocale("fr");
+                    Toast.makeText(MainActivity.this, R.string.frenchSel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 if(i ==1) {
                     setLocale("en");
+                    Toast.makeText(MainActivity.this, R.string.englishSel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 dialog.dismiss();
