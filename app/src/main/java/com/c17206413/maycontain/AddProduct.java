@@ -37,6 +37,7 @@ public class AddProduct extends AppCompatActivity {
         check2 = findViewById(R.id.dairyAllergyCheck);
         check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.saveBox);
+        language = getIntent().getStringExtra("USER_REF_ID");
 
         button_sel.setOnClickListener(new View.OnClickListener() {
             @Override

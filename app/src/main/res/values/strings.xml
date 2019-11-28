@@ -22,7 +22,7 @@
     <string name="update">Update</string>
     <string name="please_click_your_allergens">Please Click your allergens</string>
     <string name="login">Login</string>
-    <string name="maycontain">MayContain</string>
+    <string name="maycontain">May Contain</string>
     <string name="this_product_is_safe_to_use">This product is safe to use</string>
     <string name="search">Search</string>
     <string name="scan_products">Scan Products</string>
@@ -35,4 +35,10 @@
     <string name="please_scan_your_product">Please scan your product</string>
     <string name="Settings">Settings</string>
     <string name="chooseLang">Choose Language</string>
+    <string name="gluten_contains">Contains Gluten</string>
+    <string name="allergens_present">Allergens Present</string>
+    <string name="lactose_contains">Contains Dairy</string>
+    <string name="nuts_contains">Contains Nuts</string>
+    <string name="product_name">Product Name</string>
+    <string name="permsG">Permission Granted</string>
 </resources>
