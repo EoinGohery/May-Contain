@@ -113,14 +113,11 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
                     .setNegativeButton(R.string.cancel, null).create().show();
     }
 
-    // handles the result of the scan and passes the result as an intent
+   // handles the result of the scan and passes the result as string
     @Override
     public void handleResult(Result result) {
         final String scanResult = result.getText();
-
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra(getString(R.string.result),scanResult);
-        setResult(RESULT_OK,returnIntent);
+        Toast.makeText(Scanner.this,scanResult, Toast.LENGTH_LONG).show();
         finish();
 
     }
