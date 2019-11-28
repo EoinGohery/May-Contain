@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -97,10 +98,12 @@ public class AccountSettings extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int i) {
                 if(i ==0) {
                     setLocale("fr");
+                    Toast.makeText(MainActivity.this, R.string.frenchSel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 if(i ==1) {
                     setLocale("en");
+                    Toast.makeText(MainActivity.this, R.string.englishSel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 dialog.dismiss();
