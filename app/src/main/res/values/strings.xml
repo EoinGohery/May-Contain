@@ -43,5 +43,6 @@
     <string name="accessPerms">Access Permission</string>
     <string name="okCheck">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="productContains">Product Contains:</string>
 
 </resources>
