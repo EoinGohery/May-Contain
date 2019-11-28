@@ -22,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Locale;
 
 public class AccountSettings extends AppCompatActivity {
-
     CheckBox check1, check2, check3;
     Button button_sel;
     FirebaseUser user;
@@ -36,23 +35,25 @@ public class AccountSettings extends AppCompatActivity {
     public boolean gluten;
     public boolean lactose;
     public boolean nuts;
-
-    @Override
+    
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
+        //checking id for the seperate allergies
         check1 = findViewById(R.id.nutAllergyCheck);
         check2 = findViewById(R.id.dairyAllergyCheck);
         check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.saveBox);
         mEdit = findViewById(R.id.nameTextBox);
         Uid = getIntent().getStringExtra("USER_REF_ID");
-
-        db = FirebaseFirestore.getInstance();
+        //using a database to store IDs
+        db = FirebaseFirestore.getInstance();   
         user = FirebaseAuth.getInstance().getCurrentUser();
         load();
         button_sel.setOnClickListener(new View.OnClickListener() {
             @Override
+            //on click of the checbox it stores the allergy for each user and updates their account.
             public void onClick(View v) {
                 if (check1.isChecked()) {
                     userIdRef.update("nuts", true);
@@ -76,7 +77,7 @@ public class AccountSettings extends AppCompatActivity {
 
         });
 
-
+        //button to change language on click.
         changeLanguageButton = findViewById(R.id.changeLanguageButton);
         changeLanguageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +87,7 @@ public class AccountSettings extends AppCompatActivity {
         });
     }
 
-
+    //shows an alert box with choices between french and english, changes to chosen language.
     private void showChangeLanguageDialog() {
         final String[] listItems = {"French", "English"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(AccountSettings.this);
@@ -108,7 +109,7 @@ public class AccountSettings extends AppCompatActivity {
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();
     }
-
+//sets the locale language to chosen language by user
     private void setLocale(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
@@ -117,7 +118,7 @@ public class AccountSettings extends AppCompatActivity {
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
-
+//loads in the user's id from database and their preferences for allergies and language.
     private void load() {
         userIdRef = db.collection("users").document(Uid);
         userIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
@@ -155,20 +156,6 @@ public class AccountSettings extends AppCompatActivity {
 
 
     public void onCheckboxClicked(View view) {
-
-//        boolean checked = ((CheckBox) view).isChecked();
-//
-//        // Check which checkbox was clicked
-//        switch(view.getId()) {
-//            case R.id.glutenAllergyCheck:
-//                userIdRef.update("gluten",checked);
-//                break;
-//            case R.id.nutAllergyCheck:
-//                userIdRef.update("nuts",checked);
-//                break;
-//            case R.id.dairyAllergyCheck:
-//                userIdRef.update("lactose",checked);
-//                break;
-//        }
+    // unused but required header
     }
 }
