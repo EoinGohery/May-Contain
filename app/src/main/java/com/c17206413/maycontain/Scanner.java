@@ -48,7 +48,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         ActivityCompat.requestPermissions(this,new String[] {CAMERA},REQUEST_CAMERA);
     }
 
-    //passes requestcode and runs if permission is granted to use camera.
+    //passes request code and runs if permission is granted to use camera.
     public void onReqPermissionsResult(int requestCode, String [] permissions, int [] grantResults) {
         switch (requestCode)
         {
@@ -81,7 +81,7 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
         }
     }
 
-    // checks version and permissions on resume to app, requests permision if not granted
+    // checks version and permissions on resume to app, requests permission if not granted
     @Override
     public void onResume() {
         super.onResume();
