@@ -31,24 +31,16 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    protected Button logIn;
-    protected Button scanButton;
-    protected Button accountButton;
-    protected Button addButton;
+    protected Button logIn, scanButton, accountButton, addButton;
+
+    private String Uid, language,  currentDocRef;
+    private boolean gluten, lactose, nuts;
+
+    private GoogleSignInClient mGoogleSignInClient;
     private FirebaseUser user;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
-
-    private String Uid;
-    private String language;
-    private boolean gluten;
-    private boolean lactose;
-    private boolean nuts;
-
-
-    private GoogleSignInClient mGoogleSignInClient;
-    private String currentDocRef;
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 

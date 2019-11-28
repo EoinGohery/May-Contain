@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.Locale;
 
 public class AccountSettings extends AppCompatActivity {
@@ -100,12 +99,12 @@ public class AccountSettings extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int i) {
                 if(i ==0) {
                     setLocale("fr");
-                    Toast.makeText(MainActivity.this, R.string.frenchSel, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AccountSettings.this, R.string.frenchSel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 if(i ==1) {
                     setLocale("en");
-                    Toast.makeText(MainActivity.this, R.string.englishSel, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AccountSettings.this, R.string.englishSel, Toast.LENGTH_SHORT).show();
                     recreate();
                 }
                 dialog.dismiss();
