@@ -3,9 +3,12 @@ package com.c17206413.maycontain;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import android.view.View;
@@ -25,6 +28,7 @@ public class AddProduct extends AppCompatActivity {
     private boolean productLactose =false;
     private boolean productNuts =false;
     private String productName ="";
+    private String language ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,12 @@ public class AddProduct extends AppCompatActivity {
         check2 = findViewById(R.id.dairyAllergyCheck);
         check3 = findViewById(R.id.glutenAllergyCheck);
         button_sel = findViewById(R.id.saveBox);
-        language = getIntent().getStringExtra("USER_REF_ID");
+        language = getIntent().getStringExtra("EXTRA_LANGUAGE");
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         button_sel.setOnClickListener(new View.OnClickListener() {
             @Override
