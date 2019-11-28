@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         updateUI(1);
+
+        //if user hase logged in before it will be auto recognised and  localinfo set
         if (user!=null) {
             Uid =user.getUid();
             DocumentReference userIdRef = db.collection("users").document(Uid);
@@ -92,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            // if not recognised will go to login screen
         } else {
             updateUI(0);
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -104,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             mAuth = FirebaseAuth.getInstance();
         }
 
+        // CLick listener fo Search button
         scanButton = findViewById(R.id.scanButton);
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // CLick listener fo Add Product button
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // CLick listener fo Account Settings button
         accountButton = findViewById(R.id.accountButton);
         accountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +134,17 @@ public class MainActivity extends AppCompatActivity {
                 openSettingsActivity();
             }
         });
+    }
+
+    public void openScannerActivity(View v) {
+        Intent intent = new Intent(this, Scanner.class);
+        startActivityForResult(intent, 1);
+    }
+
+    public void openSettingsActivity() {
+        Intent intent = new Intent(this, AccountSettings.class);
+        intent.putExtra("USER_REF_ID", Uid);
+        startActivityForResult(intent, 2);
     }
 
     private void addProduct() {
@@ -211,17 +229,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    public void openScannerActivity(View v) {
-        Intent intent = new Intent(this, Scanner.class);
-        startActivityForResult(intent, 1);
-    }
-
-    public void openSettingsActivity() {
-        Intent intent = new Intent(this, AccountSettings.class);
-        intent.putExtra("USER_REF_ID", Uid);
-        startActivityForResult(intent, 2);
     }
 
 
