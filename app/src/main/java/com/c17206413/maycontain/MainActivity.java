@@ -302,17 +302,17 @@ public class MainActivity extends AppCompatActivity {
     private boolean isSafe (DocumentSnapshot doc) {
         boolean safe =true;
         if (doc.getBoolean("gluten") && gluten) {
-            contains += R.string.gluten_contains;
+            contains += getString(R.string.gluten_contains);
             contains += "\n";
             safe =false;
         }
         if (doc.getBoolean("lactose") && lactose) {
-            contains += R.string.lactose_contains;
+            contains += getString(R.string.lactose_contains);
             contains += "\n";
             safe =false;
         }
         if (doc.getBoolean("nuts") && nuts) {
-            contains += R.string.nuts_contains;
+            contains += getString(R.string.nuts_contains);
             contains += "\n";
             safe =false;
         }
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (result == 3) { // unsafe
             String unsafeProduct = getString(R.string.this_product_is_not_safe);
             String productContains = getString(R.string.productContains);
-            description.setText(String.format("%s\n%s%s", unsafeProduct, productContains, contains));
+            description.setText(String.format("%s\n%s%s", unsafeProduct, productContains + "\t", contains));
 
             findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.accountButton).setVisibility(View.VISIBLE);
