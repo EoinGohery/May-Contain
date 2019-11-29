@@ -44,6 +44,6 @@
     <string name="accessPerms">"droit d'accès "</string>
     <string name="okCheck">D\'accord</string>
     <string name="cancel">Annuler</string>
-    <string name="productContains">produit: </string>
+    <string name="productContains">ce produit: </string>
 
 </resources>
