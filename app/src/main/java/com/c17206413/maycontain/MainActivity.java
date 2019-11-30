@@ -1,5 +1,9 @@
 package com.c17206413.maycontain;
 
+//Group 06
+//Eoin Gohery 17206413
+//Cian McInerney 17232724
+
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +36,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    protected Button logIn, scanButton, accountButton, addButton;
+    protected Button logIn, scanButton, accountButton, addButton, signOut;
 
     private String Uid, language,  currentDocRef;
     private String contains = "";
@@ -42,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 
@@ -53,13 +56,23 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         db = FirebaseFirestore.getInstance();
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         logIn = findViewById(R.id.LoginButton);
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn(view);
+            }
+        });
+
+        signOut = findViewById(R.id.SignoutButton);
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut(view);
             }
         });
         updateUI(1);
@@ -73,21 +86,42 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            language = document.get("language").toString();
-                            gluten = document.getBoolean("gluten");
-                            lactose = document.getBoolean("lactose");
-                            nuts = document.getBoolean("nuts");
-                            Configuration config = new Configuration();
-                            Locale locale = new Locale(language);
-                            Locale.setDefault(locale);
-                            config.setLocale(locale);
-                            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-                            updateUI(1);
+                            try {
+                                // following code checks the user info so that if database has been tampered, the user will reset and the app will not crash
+                                language = document.get("language").toString();
+                                if (!language.matches("en") && !language.matches("fr")) {
+                                    language= "en";
+                                }
+                                if (document.get("gluten") instanceof Boolean) {
+                                    gluten = document.getBoolean("gluten");
+                                } else {
+                                    userReset(Uid);
+                                }
+                                if (document.get("lactose") instanceof Boolean) {
+                                    lactose = document.getBoolean("lactose");
+                                } else {
+                                    userReset(Uid);
+                                }
+                                if (document.get("nuts") instanceof Boolean) {
+                                    nuts = document.getBoolean("nuts");
+                                } else {
+                                    userReset(Uid);
+                                }
+                                Configuration config = new Configuration();
+                                Locale locale = new Locale(language);
+                                Locale.setDefault(locale);
+                                config.setLocale(locale);
+                                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                                updateUI(1);
+                            } catch (NullPointerException e) {
+                                userReset(Uid);
+                            }
                         } else {
                             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                     .requestIdToken(getString(R.string.default_web_client_id))
                                     .requestEmail()
                                     .build();
+                            updateUI(0);
                             // [END config_signin]
 
                             mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
@@ -96,8 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-
-            // if not recognised will go to login screen
+         // if not recognised will go to login screen
         } else {
             updateUI(0);
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -158,8 +191,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn(View v) {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        // [END config_signin]
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mAuth = FirebaseAuth.getInstance();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void signOut(View v) {
+        mAuth.signOut();
+        updateUI(0);
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -181,41 +227,38 @@ public class MainActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             DocumentSnapshot document = task.getResult();
                                             if (document.exists()) {
-                                                language = document.get("language").toString();
-                                                gluten = document.getBoolean("gluten");
-                                                lactose = document.getBoolean("lactose");
-                                                nuts = document.getBoolean("nuts");
-                                                Configuration config = new Configuration();
-                                                Locale locale = new Locale(language);
-                                                Locale.setDefault(locale);
-                                                config.setLocale(locale);
-                                                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-                                                updateUI(1);
-
+                                                try {
+                                                    // following code checks the user info so that if database has been tampered, the user will reset and the app will not crash
+                                                    language = document.get("language").toString();
+                                                    if (!language.matches("en") && !language.matches("fr")) {
+                                                        language= "en";
+                                                    }
+                                                    if (document.get("gluten") instanceof Boolean) {
+                                                        gluten = document.getBoolean("gluten");
+                                                    } else {
+                                                        userReset(Uid);
+                                                    }
+                                                    if (document.get("lactose") instanceof Boolean) {
+                                                        lactose = document.getBoolean("lactose");
+                                                    } else {
+                                                        userReset(Uid);
+                                                    }
+                                                    if (document.get("nuts") instanceof Boolean) {
+                                                        nuts = document.getBoolean("nuts");
+                                                    } else {
+                                                        userReset(Uid);
+                                                    }
+                                                    Configuration config = new Configuration();
+                                                    Locale locale = new Locale(language);
+                                                    Locale.setDefault(locale);
+                                                    config.setLocale(locale);
+                                                    getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                                                    updateUI(1);
+                                                } catch (RuntimeException e) {
+                                                    userReset(Uid);
+                                                }
                                             } else {
-                                                Map<String, Object> user = new HashMap<>();
-                                                user.put("name", "Your Name?");
-                                                user.put("gluten", false);
-                                                user.put("lactose", false);
-                                                user.put("nuts", false);
-                                                user.put("language", "en");
-
-
-                                                db.collection("users").document(Uid)
-                                                        .set(user)
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
-                                                                Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                Log.w(TAG, "Error writing document", e);
-                                                            }
-                                                        });
+                                                userReset(Uid);
                                             }
                                         } else {
                                             Log.d(TAG, "Failed with: ", task.getException());
@@ -229,6 +272,32 @@ public class MainActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             updateUI(0);
                         }
+                    }
+                });
+    }
+
+    // this function will reset the user to default values if the user document has incorrect data types or missing fields
+    private void userReset( String Uid) {
+        Map<String, Object> user = new HashMap<>();
+        user.put("name", "Your Name?");
+        user.put("gluten", false);
+        user.put("lactose", false);
+        user.put("nuts", false);
+        user.put("language", "en");
+
+
+        db.collection("users").document(Uid)
+                .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
                     }
                 });
     }
@@ -264,8 +333,7 @@ public class MainActivity extends AppCompatActivity {
                             Locale.setDefault(locale);
                             config.setLocale(locale);
                             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-                            updateUI(1);
+                            recreate();
                         }
                     }
                 }
@@ -275,16 +343,41 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String result = data.getStringExtra("result");
                 currentDocRef = result;
-                DocumentReference docIdRef = db.collection("products").document(result);
+                final DocumentReference docIdRef = db.collection("products").document(result);
                 docIdRef.get().addOnCompleteListener(this, new OnCompleteListener<DocumentSnapshot>() {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                                if (isSafe(document)) {
-                                    updateUI(2);
-                                } else {
-                                    updateUI(3);
+                                try {
+                                    Boolean check= true;
+                                    String productName;
+                                    productName = document.get("name").toString();
+
+                                    // following code checks if product data types are correct
+                                    if (document.get("gluten") instanceof Boolean) {
+                                        check = document.getBoolean("gluten");
+                                        if (document.get("nuts") instanceof Boolean) {
+                                            check = document.getBoolean("nuts");
+                                            if (document.get("lactose") instanceof Boolean) {
+                                                check = document.getBoolean("lactose");
+                                                if (isSafe(document)) {
+                                                    updateUI(2);
+                                                } else {
+                                                    updateUI(3);
+                                                }
+                                            } else {
+                                                deleteProduct(document);
+                                            }
+                                        } else {
+                                            deleteProduct(document);
+                                        }
+                                    } else {
+                                        deleteProduct(document);
+                                    }
+
+                                } catch (NullPointerException e) {
+                                    deleteProduct(document);
                                 }
                             } else {
                                 updateUI(4);
@@ -292,12 +385,30 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-
             }
             if (resultCode == RESULT_CANCELED) {
                 updateUI(1);
             }
         }
+    }
+
+    //deletes a product from database if the product has missing fields or incorrect data types
+    private void deleteProduct(DocumentSnapshot document) {
+        db.collection("products").document(document.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+        updateUI(4);
     }
 
     private boolean isSafe (DocumentSnapshot doc) {
@@ -321,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
         return safe;
     }
 
-
+    //updates the main activity UI to 4 possible versions
     private void updateUI(int result) {
         TextView description = findViewById(R.id.description);
         ImageView image = findViewById(R.id.image);
@@ -332,6 +443,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.accountButton).setVisibility(View.GONE);
             findViewById(R.id.LoginButton).setVisibility(View.VISIBLE);
             findViewById(R.id.scanButton).setVisibility(View.GONE);
+            findViewById(R.id.SignoutButton).setVisibility(View.GONE);
             image.setImageResource(R.drawable.common_google_signin_btn_icon_light_normal);
         } else if (result == 1) { // search
             description.setText(R.string.search);
@@ -339,6 +451,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.accountButton).setVisibility(View.VISIBLE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
+            findViewById(R.id.SignoutButton).setVisibility(View.VISIBLE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.search_icon);
         } else if (result == 2) { // safe
@@ -347,6 +460,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.accountButton).setVisibility(View.VISIBLE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
+            findViewById(R.id.SignoutButton).setVisibility(View.VISIBLE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.safe_tick);
         } else if (result == 3) { // unsafe
@@ -359,6 +473,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.accountButton).setVisibility(View.VISIBLE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
+            findViewById(R.id.SignoutButton).setVisibility(View.VISIBLE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.x_mark);
         } else if (result == 4) { // unknown
@@ -367,6 +482,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.addButton).setVisibility(View.VISIBLE);
             findViewById(R.id.accountButton).setVisibility(View.VISIBLE);
             findViewById(R.id.LoginButton).setVisibility(View.GONE);
+            findViewById(R.id.SignoutButton).setVisibility(View.VISIBLE);
             findViewById(R.id.scanButton).setVisibility(View.VISIBLE);
             image.setImageResource(R.drawable.unknown_icon);
         }

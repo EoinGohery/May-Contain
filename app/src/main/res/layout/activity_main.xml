@@ -8,6 +8,19 @@
 
 
     <Button
+        android:id="@+id/SignoutButton"
+        android:layout_width="115dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="644dp"
+        android:onClick="signOut"
+        android:text="@string/sign_out"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/LoginButton"
         android:layout_width="160dp"
         android:layout_height="99dp"
@@ -33,26 +46,27 @@
 
     <Button
         android:id="@+id/accountButton"
-        android:layout_width="107dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="648dp"
+        android:layout_width="115dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="644dp"
         android:onClick="openScannerActivity"
         android:text="@string/account"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.905"
+        app:layout_constraintHorizontal_bias="0.945"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/addButton"
-        android:layout_width="109dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="648dp"
+        android:layout_width="115dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="644dp"
         android:onClick="openScannerActivity"
         android:text="@string/addProduct"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
