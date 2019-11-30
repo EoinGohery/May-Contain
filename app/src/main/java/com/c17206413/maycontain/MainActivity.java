@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -351,7 +352,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (result == 3) { // unsafe
             String unsafeProduct = getString(R.string.this_product_is_not_safe);
             String productContains = getString(R.string.productContains);
+            description.setMovementMethod(new ScrollingMovementMethod());
             description.setText(String.format("%s\n%s%s", unsafeProduct, productContains + "\t", contains));
+            contains = "";
 
             findViewById(R.id.addButton).setVisibility(View.GONE);
             findViewById(R.id.accountButton).setVisibility(View.VISIBLE);

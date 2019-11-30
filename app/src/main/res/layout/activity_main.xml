@@ -69,16 +69,22 @@
 
     <TextView
         android:id="@+id/description"
-        android:layout_width="365dp"
-        android:layout_height="500dp"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="200dp"
         android:ems="10"
+        android:minLines="5"
+        android:scrollbars="vertical"
         android:text="@string/this_product_is_safe_to_use"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        app:layout_constraintVertical_bias="0.15" />
 
     <TextView
         android:id="@+id/editText2"
