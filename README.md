@@ -17,4 +17,4 @@
 
 7) App defaults to English.
 
-8)APK is in release folder
+8) APK is in release folder.
